@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banka Sort — a cozy jar sort puzzle</title>
+<meta name="description" content="A cozy sort puzzle for iPhone and iPad. Sort cucumbers, apricots, tomatoes, sunflower seeds and nails into glass jars. 200 levels, no ads, no in-app purchases.">
+<meta name="theme-color" content="#f6e7c8">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="alternate" hreflang="ru" href="../">
+<style>
+  :root {
+    --bg: #fbf3e2; --paper: #fffaf0; --ink: #3b2a1a; --muted: #7a6450;
+    --line: #ecd9b4; --wood: #a8672f; --gold: #f2c14e; --gold-ink: #5a3a12;
+    --tomato: #c9412a; --green: #5d8b2a;
+    --sans: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #221811; --paper: #2e2118; --ink: #f5e9d6; --muted: #c8b29a; --line: #4a3626; --wood: #e0a565; --tomato: #ef7a5f; --green: #9cc865; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--wood); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  header { display: flex; align-items: center; gap: 10px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 800; font-size: 20px; }
+  .brand img { width: 36px; height: 36px; border-radius: 9px; }
+  .lang { margin-left: auto; font-weight: 700; font-size: 15px; text-decoration: none; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+  .hero { position: relative; border-radius: 28px; overflow: hidden; background: #f6e7c8 url("../img/room.webp") center 30% / cover no-repeat; min-height: 440px; display: flex; align-items: flex-end; }
+  .hero-card { margin: 20px; padding: 24px; max-width: 560px; background: rgba(255, 250, 240, .92); color: #3b2a1a; border-radius: 22px; box-shadow: 0 10px 30px rgba(90, 58, 18, .25); display: grid; gap: 14px; }
+  .hero-card .top { display: flex; align-items: center; gap: 16px; }
+  .hero-card .top img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 4px 12px rgba(90, 58, 18, .3); }
+  .eyebrow { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #a8672f; }
+  h1 { margin: 0; font-size: clamp(30px, 6vw, 44px); line-height: 1.08; font-weight: 900; }
+  .lead { margin: 0; color: #5b4632; }
+  .soon { display: inline-flex; align-items: center; gap: 8px; justify-self: start; background: var(--gold); color: var(--gold-ink); font-weight: 800; border-radius: 14px; padding: 10px 16px; box-shadow: inset 0 -3px 0 rgba(90, 58, 18, .25); }
+  .goods { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin: 28px 0 8px; }
+  .goods img { width: 72px; height: 72px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(90, 58, 18, .25)); }
+  h2 { font-size: 28px; line-height: 1.2; margin: 48px 0 18px; font-weight: 900; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
+  .steps li { counter-increment: step; background: var(--paper); border: 1.5px solid var(--line); border-radius: 20px; padding: 18px 18px 18px 64px; position: relative; }
+  .steps li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: var(--paper); font-weight: 900; display: grid; place-items: center; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card { background: var(--paper); border: 1.5px solid var(--line); border-radius: 20px; padding: 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; font-weight: 800; }
+  .card h3 img { width: 34px; height: 34px; vertical-align: -9px; margin-right: 8px; }
+  .card p { margin: 0; color: var(--muted); }
+  .num { color: var(--tomato); }
+  footer { margin: 56px 0 0; padding: 24px 0 40px; border-top: 1.5px solid var(--line); color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  footer .copy { margin-left: auto; }
+  @media (max-width: 560px) {
+    .hero { min-height: 520px; }
+    .hero-card { margin: 12px; padding: 18px; }
+    .hero-card .top img { width: 64px; height: 64px; border-radius: 15px; }
+    .goods img { width: 56px; height: 56px; }
+    footer .copy { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="./"><img src="../favicon.png" alt="">Banka Sort</a>
+    <a class="lang" href="../" hreflang="ru" lang="ru">Русский</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <div class="top">
+        <img src="../img/icon.webp" alt="Banka Sort icon: a jar of tomatoes, cucumbers and sunflower seeds">
+        <div>
+          <p class="eyebrow">A puzzle for iPhone and iPad</p>
+          <h1>Put everything in its jar</h1>
+        </div>
+      </div>
+      <p class="lead">Cucumbers, apricots, tomatoes, sunflower seeds and nails are mixed up in big glass jars. Move them until each jar holds one kind of goods. Then the jar closes with a lid.</p>
+      <span class="soon">Coming soon to the App Store</span>
+    </div>
+  </section>
+
+  <div class="goods">
+    <img src="../img/cucumber.webp" alt="Cucumbers">
+    <img src="../img/apricot.webp" alt="Apricots">
+    <img src="../img/tomato.webp" alt="Tomatoes">
+    <img src="../img/seed.webp" alt="Sunflower seeds">
+    <img src="../img/nail.webp" alt="Nails">
+  </div>
+
+  <h2>How to play</h2>
+  <ol class="steps">
+    <li>Tap a jar to take its top layer.</li>
+    <li>Tap a different jar to pour the goods into it. You can pour into an empty jar or onto the same kind of goods.</li>
+    <li>A jar with one kind of goods closes with a lid. Close all the jars to clear the level.</li>
+  </ol>
+
+  <h2>What is inside</h2>
+  <div class="grid">
+    <div class="card"><h3><span class="num">200</span> levels</h3><p>We checked each level. Each level has a solution.</p></div>
+    <div class="card"><h3>Difficulty grows slowly</h3><p>The first levels are a warm-up with few jars. Then come tricky, hard and ultra hard levels with a pour limit.</p></div>
+    <div class="card"><h3>New twists</h3><p>Jars that are not full, layers that hide under the top layer, and a locked jar. The lock opens when the first jar closes.</p></div>
+    <div class="card"><h3><img src="../img/star.webp" alt="">Stars</h3><p>Use fewer pours to get more stars for the level.</p></div>
+    <div class="card"><h3><img src="../img/hint.webp" alt="">Hint and undo</h3><p>A hint shows a good move. Undo takes back the last move.</p></div>
+    <div class="card"><h3><img src="../img/add_jar.webp" alt="">A spare jar</h3><p>"Add jar" gives you one more empty jar. "Free pour" puts goods on top of a different kind. You can restart a level at any time.</p></div>
+    <div class="card"><h3>Game Center</h3><p>Leaderboards and achievements.</p></div>
+    <div class="card"><h3>Nothing extra</h3><p>No ads, no in-app purchases, no account. The game works offline and collects no data.</p></div>
+  </div>
+
+  <footer>
+    <a href="privacy.html">Privacy</a>
+    <a href="support.html">Support</a>
+    <a href="mailto:xepozz@icloud.com">xepozz@icloud.com</a>
+    <span class="copy">© 2026 Dmitrii Derepko</span>
+  </footer>
+</div>
+</body>
+</html>

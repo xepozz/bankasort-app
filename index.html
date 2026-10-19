@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banka Sort — уютная головоломка: разложите всё по банкам</title>
+<meta name="description" content="Уютная головоломка-сортировка для iPhone и iPad. Разложите огурцы, абрикосы, помидоры, семечки и гвозди по трёхлитровым банкам. 200 уровней, без рекламы и без покупок.">
+<meta name="theme-color" content="#f6e7c8">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="alternate" hreflang="en" href="en/">
+<style>
+  :root {
+    --bg: #fbf3e2; --paper: #fffaf0; --ink: #3b2a1a; --muted: #7a6450;
+    --line: #ecd9b4; --wood: #a8672f; --gold: #f2c14e; --gold-ink: #5a3a12;
+    --tomato: #c9412a; --green: #5d8b2a;
+    --sans: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #221811; --paper: #2e2118; --ink: #f5e9d6; --muted: #c8b29a; --line: #4a3626; --wood: #e0a565; --tomato: #ef7a5f; --green: #9cc865; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--wood); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  header { display: flex; align-items: center; gap: 10px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 800; font-size: 20px; }
+  .brand img { width: 36px; height: 36px; border-radius: 9px; }
+  .lang { margin-left: auto; font-weight: 700; font-size: 15px; text-decoration: none; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+  .hero { position: relative; border-radius: 28px; overflow: hidden; background: #f6e7c8 url("img/room.webp") center 30% / cover no-repeat; min-height: 440px; display: flex; align-items: flex-end; }
+  .hero-card { margin: 20px; padding: 24px; max-width: 560px; background: rgba(255, 250, 240, .92); color: #3b2a1a; border-radius: 22px; box-shadow: 0 10px 30px rgba(90, 58, 18, .25); display: grid; gap: 14px; }
+  .hero-card .top { display: flex; align-items: center; gap: 16px; }
+  .hero-card .top img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 4px 12px rgba(90, 58, 18, .3); }
+  .eyebrow { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #a8672f; }
+  h1 { margin: 0; font-size: clamp(30px, 6vw, 44px); line-height: 1.08; font-weight: 900; }
+  .lead { margin: 0; color: #5b4632; }
+  .soon { display: inline-flex; align-items: center; gap: 8px; justify-self: start; background: var(--gold); color: var(--gold-ink); font-weight: 800; border-radius: 14px; padding: 10px 16px; box-shadow: inset 0 -3px 0 rgba(90, 58, 18, .25); }
+  .goods { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin: 28px 0 8px; }
+  .goods img { width: 72px; height: 72px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(90, 58, 18, .25)); }
+  h2 { font-size: 28px; line-height: 1.2; margin: 48px 0 18px; font-weight: 900; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
+  .steps li { counter-increment: step; background: var(--paper); border: 1.5px solid var(--line); border-radius: 20px; padding: 18px 18px 18px 64px; position: relative; }
+  .steps li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: var(--paper); font-weight: 900; display: grid; place-items: center; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card { background: var(--paper); border: 1.5px solid var(--line); border-radius: 20px; padding: 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; font-weight: 800; }
+  .card h3 img { width: 34px; height: 34px; vertical-align: -9px; margin-right: 8px; }
+  .card p { margin: 0; color: var(--muted); }
+  .num { color: var(--tomato); }
+  footer { margin: 56px 0 0; padding: 24px 0 40px; border-top: 1.5px solid var(--line); color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  footer .copy { margin-left: auto; }
+  @media (max-width: 560px) {
+    .hero { min-height: 520px; }
+    .hero-card { margin: 12px; padding: 18px; }
+    .hero-card .top img { width: 64px; height: 64px; border-radius: 15px; }
+    .goods img { width: 56px; height: 56px; }
+    footer .copy { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="./"><img src="favicon.png" alt="">Banka Sort</a>
+    <a class="lang" href="en/" hreflang="en" lang="en">English</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <div class="top">
+        <img src="img/icon.webp" alt="Иконка Banka Sort: банка с помидорами, огурцами и семечками">
+        <div>
+          <p class="eyebrow">Головоломка для iPhone и iPad</p>
+          <h1>Разложите всё по банкам</h1>
+        </div>
+      </div>
+      <p class="lead">В трёхлитровых банках перемешались огурцы, абрикосы, помидоры, семечки и гвозди. Переложите их так, чтобы в каждой банке остался один товар, — и банка закроется крышкой.</p>
+      <span class="soon">Скоро в App Store</span>
+    </div>
+  </section>
+
+  <div class="goods">
+    <img src="img/cucumber.webp" alt="Огурцы">
+    <img src="img/apricot.webp" alt="Абрикосы">
+    <img src="img/tomato.webp" alt="Помидоры">
+    <img src="img/seed.webp" alt="Семечки">
+    <img src="img/nail.webp" alt="Гвозди">
+  </div>
+
+  <h2>Как играть</h2>
+  <ol class="steps">
+    <li>Коснитесь банки — вы возьмёте верхний слой.</li>
+    <li>Коснитесь другой банки — товар пересыплется в неё. Класть можно в пустую банку или на такой же товар.</li>
+    <li>Банка с одним товаром закрывается крышкой. Закройте все банки — и уровень пройден.</li>
+  </ol>
+
+  <h2>Что внутри</h2>
+  <div class="grid">
+    <div class="card"><h3><span class="num">200</span> уровней</h3><p>Каждый уровень проверен: у него всегда есть решение.</p></div>
+    <div class="card"><h3>Сложность растёт плавно</h3><p>Сначала разминка на нескольких банках. Дальше — уровни «сложный», «хард» и «ультра хард» с лимитом переливов.</p></div>
+    <div class="card"><h3>Новые хитрости</h3><p>Банки, заполненные не до верха, слои, спрятанные под верхним, и запертая банка: она откроется, когда закроется первая крышка.</p></div>
+    <div class="card"><h3><img src="img/star.webp" alt="">Звёзды</h3><p>Чем меньше переливов, тем больше звёзд за уровень.</p></div>
+    <div class="card"><h3><img src="img/hint.webp" alt="">Подсказка и отмена</h3><p>Подсказка покажет хороший ход, отмена вернёт последний.</p></div>
+    <div class="card"><h3><img src="img/add_jar.webp" alt="">Запасная банка</h3><p>«Добавить банку» даст лишнюю пустую банку, «Перелить наверх» положит товар поверх другого. Уровень можно начать заново в любой момент.</p></div>
+    <div class="card"><h3>Game Center</h3><p>Таблицы рекордов и достижения.</p></div>
+    <div class="card"><h3>Ничего лишнего</h3><p>Без рекламы, без покупок и без регистрации. Игра работает без интернета и не собирает данные.</p></div>
+  </div>
+
+  <footer>
+    <a href="privacy.html">Конфиденциальность</a>
+    <a href="support.html">Поддержка</a>
+    <a href="mailto:xepozz@icloud.com">xepozz@icloud.com</a>
+    <span class="copy">© 2026 Дмитрий Дерепко</span>
+  </footer>
+</div>
+</body>
+</html>
